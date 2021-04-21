@@ -86,7 +86,7 @@
   </change-notes>
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-  <idea-version since-build="201.0"/>
+  <idea-version since-build="211.0"/>
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
        on how to target different products -->
@@ -99,7 +99,22 @@
     <externalAnnotator id="LSPAnnotator-txt" language="TEXT" implementationClass="org.wso2.lsp4intellij.contributors.annotator.LSPAnnotator"/>
     <preloadingActivity implementation="org.jboss.tools.intellij.analytics.PreloadLanguageServer"
                 id="org.jboss.tools.intellij.analytics.PostStartupActivity"/>
+    <preloadingActivity implementation="org.jboss.tools.intellij.analytics.PreloadCli"
+                        id="org.jboss.tools.intellij.analytics.PostStartupCliActivity"/>
   </extensions>
+
+  <!-- Action for running SA added in Editor window and Navigation Bar -->
+  <actions>
+    <group>
+      <action id="saAnalysis" text="Dependency Analytics Report" class="org.jboss.tools.intellij.analytics.StackAnalysisAction"
+              icon="SdkIcons.Sdk_default_icon"/>
+
+      <separator/>
+
+      <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+      <add-to-group group-id="NavBarToolBar" anchor="first"/>
+    </group>
+  </actions>
 
   <application-components>
     <component>
