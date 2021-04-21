@@ -99,6 +99,8 @@
     <externalAnnotator id="LSPAnnotator-txt" language="TEXT" implementationClass="org.wso2.lsp4intellij.contributors.annotator.LSPAnnotator"/>
     <preloadingActivity implementation="org.jboss.tools.intellij.analytics.PreloadLanguageServer"
                 id="org.jboss.tools.intellij.analytics.PostStartupActivity"/>
+    <preloadingActivity implementation="org.jboss.tools.intellij.analytics.PreloadCliTool"
+                        id="org.jboss.tools.intellij.analytics.PostStartupCliActivity"/>
   </extensions>
 
   <application-components>
