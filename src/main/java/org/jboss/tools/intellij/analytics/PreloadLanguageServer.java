@@ -14,7 +14,7 @@ public final class PreloadLanguageServer extends PreloadingActivity {
   private final ICookie cookies = ServiceManager.getService(Settings.class);
 
   private void attachLanguageClient(final File cliFile) {
-    final String[] EXTENSIONS = {"xml", "json", "txt"};
+    final String[] EXTENSIONS = {"xml", "json", "txt", "mod"};
     final String[] cmds = {cliFile.toString(), "--stdio"};
     ApplicationManager.getApplication().invokeAndWait(() -> {
       for (String ext : EXTENSIONS) {
@@ -38,7 +38,11 @@ public final class PreloadLanguageServer extends PreloadingActivity {
       if (devUrl != null) {
         lspBundle = new File(devUrl);
       } else {
-        final GitHubReleaseDownloader bundle = new GitHubReleaseDownloader(Platform.current.lspBundleName, cookies);
+        final GitHubReleaseDownloader bundle = new GitHubReleaseDownloader(
+                Platform.current.lspBundleName,
+                cookies,
+                "fabric8-analytics/fabric8-analytics-lsp-server",
+                false);
         lspBundle = bundle.download(indicator);
       }
       attachLanguageClient(lspBundle);
