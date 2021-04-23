@@ -9,8 +9,8 @@ import com.intellij.openapi.progress.ProgressIndicator;
 import java.io.File;
 import java.io.IOException;
 
-public final class PreloadCliTool extends PreloadingActivity {
-  private static final Logger log = Logger.getInstance(PreloadCliTool.class);
+public final class PreloadCli extends PreloadingActivity {
+  private static final Logger log = Logger.getInstance(PreloadCli.class);
   private final ICookie cookies = ServiceManager.getService(Settings.class);
 
   @Override
@@ -19,11 +19,17 @@ public final class PreloadCliTool extends PreloadingActivity {
       return;
     }
     log.warn("cli preload is called");
+
     try {
+      final String devUrl = System.getenv("CLI_FILE_PATH");
       File cliBundle;
-      log.warn(CLI.current.cliBundleName);
-      final CliToolReleaseDownloader bundle = new CliToolReleaseDownloader(CLI.current.cliBundleName, cookies);
-      bundle.download(indicator);
+      if (devUrl != null) {
+        cliBundle = new File(devUrl);
+      } else {
+        final CliReleaseDownloader bundle = new CliReleaseDownloader(Cli.current.cliTarBallName,
+                Cli.current.cliBinaryName, cookies, "fabric8-analytics/cli-tools");
+        cliBundle = bundle.download(indicator);
+      }
     } catch(IOException ex) {
       log.info("cli download fail");
     }
