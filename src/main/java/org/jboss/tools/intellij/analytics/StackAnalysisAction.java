@@ -16,6 +16,7 @@ public class StackAnalysisAction extends AnAction {
     public void actionPerformed(@NotNull AnActionEvent event) {
         log.warn("Inside PopupDialogAction:actionPerformed ");
         log.warn("Manifest File Location= "+ event.getData(PlatformDataKeys.VIRTUAL_FILE).getPath());
+        log.warn("Action Location= "+ event.getPlace());
     }
 
     @Override

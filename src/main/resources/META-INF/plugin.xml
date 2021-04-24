@@ -105,8 +105,11 @@
 
   <actions>
     <group>
-      <action id="saAnalysis" text="Run Stack Analysis" class="org.jboss.tools.intellij.analytics.StackAnalysisAction"/>
+      <action id="saAnalysis" text="Run Stack Analysis" class="org.jboss.tools.intellij.analytics.StackAnalysisAction"
+              icon="SdkIcons.Sdk_default_icon"/>
+
       <separator/>
+
       <add-to-group group-id="EditorPopupMenu" anchor="first"/>
       <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
       <add-to-group group-id="NavBarToolBar" anchor="first"/>
