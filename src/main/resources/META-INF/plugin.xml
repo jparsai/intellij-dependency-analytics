@@ -103,6 +103,13 @@
                         id="org.jboss.tools.intellij.analytics.PostStartupCliActivity"/>
   </extensions>
 
+  <actions>
+    <action id="org.intellij.sdk.action.CustomGroupedAction" text="Run Stack Analysis"
+            class="org.jboss.tools.intellij.analytics.StackAnalysisAction">
+      <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+    </action>
+  </actions>
+
   <application-components>
     <component>
       <implementation-class>org.wso2.lsp4intellij.IntellijLanguageClient</implementation-class>
