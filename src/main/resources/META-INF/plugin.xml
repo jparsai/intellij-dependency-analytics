@@ -104,20 +104,13 @@
   </extensions>
 
   <actions>
-    <action id="manifestFile" text="Run Stack Analysis"
-            class="org.jboss.tools.intellij.analytics.StackAnalysisAction">
+    <group>
+      <action id="saAnalysis" text="Run Stack Analysis" class="org.jboss.tools.intellij.analytics.StackAnalysisAction"/>
+      <separator/>
       <add-to-group group-id="EditorPopupMenu" anchor="first"/>
-    </action>
-    <action id="navigationBar" text="Run Stack Analysis"
-            class="org.jboss.tools.intellij.analytics.StackAnalysisAction">
-      <add-to-group group-id="NavBarToolBar" anchor="first"/>
-    </action>
-    <action id="projectView" text="Run Stack Analysis"
-            class="org.jboss.tools.intellij.analytics.StackAnalysisAction">
       <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
-    </action>
-
-
+      <add-to-group group-id="NavBarToolBar" anchor="first"/>
+    </group>
   </actions>
 
   <application-components>
