@@ -104,10 +104,20 @@
   </extensions>
 
   <actions>
-    <action id="org.intellij.sdk.action.CustomGroupedAction" text="Run Stack Analysis"
+    <action id="manifestFile" text="Run Stack Analysis"
             class="org.jboss.tools.intellij.analytics.StackAnalysisAction">
       <add-to-group group-id="EditorPopupMenu" anchor="first"/>
     </action>
+    <action id="navigationBar" text="Run Stack Analysis"
+            class="org.jboss.tools.intellij.analytics.StackAnalysisAction">
+      <add-to-group group-id="NavBarToolBar" anchor="first"/>
+    </action>
+    <action id="projectView" text="Run Stack Analysis"
+            class="org.jboss.tools.intellij.analytics.StackAnalysisAction">
+      <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
+    </action>
+
+
   </actions>
 
   <application-components>
