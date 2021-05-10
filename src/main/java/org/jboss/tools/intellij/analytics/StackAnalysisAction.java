@@ -22,8 +22,16 @@ public class StackAnalysisAction extends AnAction {
         // Set the path of directory having CLI binary into command
         String cmd = CliConfig.CLI_ANALYSE.replace("filepath", filePath);
         cmd = new CliConfig().getCliBinaryPath() + File.separator + cmd;
-        String results = new CommandExecutor().execute(cmd);
-        log.warn("results = "+results);
+        String saReportString = new CommandExecutor().execute(cmd);
+
+        new Thread() {
+            @Override
+            public void run() {
+                new CliConfig().setSaReport(saReportString);
+                javafx.application.Application.launch(Webview.class);
+            }
+        }.start();
+
     }
 
     @Override
