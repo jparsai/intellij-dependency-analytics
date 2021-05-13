@@ -12,8 +12,4 @@ public class CliConfig {
     public void setCliBinaryPath(String cliBinaryPath) {
         this.cliBinaryPath = cliBinaryPath;
     }
-
-    public static String saReport;
-    public String getSaReport() { return saReport; }
-    public void setSaReport(String saReport) { this.saReport = saReport; }
 }

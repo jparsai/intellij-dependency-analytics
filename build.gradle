@@ -16,16 +16,13 @@ apply plugin: 'org.jetbrains.intellij'
 apply plugin: 'java'
 apply plugin: 'jacoco'
 
-sourceCompatibility = '1.11'
-targetCompatibility = '1.11'
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
 
 intellij {
     version ideaVersion //for a full list of IntelliJ IDEA releases please see https://www.jetbrains.com/intellij-repository/releases
     pluginName 'org.jboss.tools.intellij.analytics'
-    plugins = [
-            'com.redhat.devtools.intellij.telemetry:0.0.1.9',
-            'com.intellij.javafx:1.0.2'
-    ]
+    plugins 'com.redhat.devtools.intellij.telemetry:0.0.1.9'
     updateSinceUntilBuild false
 }
 
@@ -41,14 +38,7 @@ dependencies {
     implementation 'com.github.ballerina-platform:lsp4intellij:master-SNAPSHOT'
     implementation 'org.kohsuke:github-api:1.119'
     implementation 'org.apache.commons:commons-compress:1.20'
-    implementation 'org.openjfx:javafx-base:15.0.1'
-    implementation 'org.openjfx:javafx-controls:15.0.1'
-    implementation 'org.openjfx:javafx-graphics:15.0.1'
-    implementation 'org.openjfx:javafx-media:15.0.1'
-    implementation 'org.openjfx:javafx-swing:15.0.1'
-    implementation 'org.openjfx:javafx-fxml:15.0.1'
-    implementation 'org.openjfx:javafx-web:15.0.1'
-    implementation group: 'org.json', name: 'json', version: '20201115'
+    implementation 'org.json:json:20201115'
     testImplementation("junit:junit:4.12")
 }
 

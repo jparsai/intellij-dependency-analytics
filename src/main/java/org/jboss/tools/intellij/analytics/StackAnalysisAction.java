@@ -4,6 +4,7 @@ import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.psi.PsiFile;
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.Arrays;
@@ -23,15 +24,9 @@ public class StackAnalysisAction extends AnAction {
         String cmd = CliConfig.CLI_ANALYSE.replace("filepath", filePath);
         cmd = new CliConfig().getCliBinaryPath() + File.separator + cmd;
         String saReportString = new CommandExecutor().execute(cmd);
-
-        new Thread() {
-            @Override
-            public void run() {
-                new CliConfig().setSaReport(saReportString);
-                javafx.application.Application.launch(Webview.class);
-            }
-        }.start();
-
+        JSONObject saReportJson = new JSONObject(saReportString);
+        log.warn("saReportString == "+saReportString);
+        new Webview().webview(saReportJson.getString("report_link"));
     }
 
     @Override
