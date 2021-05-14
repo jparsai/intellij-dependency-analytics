@@ -16,9 +16,15 @@ public class Webview {
             if (activeFrame == null) return;
             JFrame frame = new IdeFrameImpl();
             frame.setTitle("Dependency Analytics Report");
+            frame.setLayout(new BorderLayout());
             frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
             JBCefBrowser browser = new JBCefBrowser(url);
+
+            JTextField urlBar = new JTextField(url);
+            urlBar.addActionListener(event -> browser.loadURL(urlBar.getText()));
+            frame.add(urlBar, BorderLayout.NORTH);
+
             frame.add(browser.getComponent(), BorderLayout.CENTER);
             frame.addWindowListener(new WindowAdapter() {
                 @Override
