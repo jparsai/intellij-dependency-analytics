@@ -103,7 +103,7 @@
                         id="org.jboss.tools.intellij.analytics.PostStartupCliActivity"/>
   </extensions>
 
-  <!-- Action for running SA added in Editor window, Navigation Bar and Project window -->
+  <!-- Action for running SA added in Editor window and Navigation Bar -->
   <actions>
     <group>
       <action id="saAnalysis" text="Dependency Analytics Report" class="org.jboss.tools.intellij.analytics.StackAnalysisAction"
@@ -112,7 +112,6 @@
       <separator/>
 
       <add-to-group group-id="EditorPopupMenu" anchor="first"/>
-      <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
       <add-to-group group-id="NavBarToolBar" anchor="first"/>
     </group>
   </actions>

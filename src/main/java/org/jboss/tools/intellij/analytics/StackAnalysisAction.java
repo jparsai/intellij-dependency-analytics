@@ -2,7 +2,16 @@ package org.jboss.tools.intellij.analytics;
 
 import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.wm.RegisterToolWindowTask;
+import com.intellij.openapi.wm.ToolWindow;
+import com.intellij.openapi.wm.ToolWindowAnchor;
+import com.intellij.openapi.wm.ToolWindowManager;
 import com.intellij.psi.PsiFile;
+import com.intellij.ui.content.Content;
+import com.intellij.ui.content.ContentFactory;
+import com.intellij.ui.content.ContentManager;
+import icons.SdkIcons;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
@@ -16,17 +25,9 @@ public class StackAnalysisAction extends AnAction {
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent event) {
-        // Logic to Run SA
-        // Get Manifest file absolute path
-        String filePath = event.getData(PlatformDataKeys.VIRTUAL_FILE).getPath();
-
-        // Set the path of directory having CLI binary into command
-        String cmd = CliConfig.CLI_ANALYSE.replace("filepath", filePath);
-        cmd = new CliConfig().getCliBinaryPath() + File.separator + cmd;
-        String saReportString = new CommandExecutor().execute(cmd);
-        JSONObject saReportJson = new JSONObject(saReportString);
-        log.warn("saReportString == "+saReportString);
-        new Webview().webview(saReportJson.getString("report_link"));
+        JSONObject saReportJson = new JSONObject(getSaReport(
+                event.getData(PlatformDataKeys.VIRTUAL_FILE).getPath()));
+        openToolWindow(event.getProject(), saReportJson.getString("report_link"));
     }
 
     @Override
@@ -41,5 +42,39 @@ public class StackAnalysisAction extends AnAction {
             event.getPresentation().setEnabledAndVisible(extensions
                     .contains(psiFile.getFileType().getDefaultExtension()));
         }
+    }
+
+    private String getSaReport(String filePath){
+        // Logic to run SA
+        // Set the path of directory having CLI binary into command
+        String cmd = CliConfig.CLI_ANALYSE.replace("filepath", filePath);
+        cmd = new CliConfig().getCliBinaryPath() + File.separator + cmd;
+        CommandExecutor cmdExecutor = new CommandExecutor();
+        return cmdExecutor.execute(cmd);
+    }
+
+    private void openToolWindow(Project project, String url) {
+        // Logic to open tool window and show the report
+        ToolWindowManager toolWindowManager = ToolWindowManager.getInstance(project);
+        ToolWindow toolWindow = toolWindowManager.getToolWindow("Dependency Analytics");
+
+        if (toolWindow == null) {
+            RegisterToolWindowTask registerToolWindowTask = new RegisterToolWindowTask("Dependency Analytics",
+                    ToolWindowAnchor.BOTTOM, null, false, true, false,
+                    true, null, SdkIcons.Sdk_default_icon, null);
+            toolWindow = toolWindowManager.registerToolWindow(registerToolWindowTask);
+            toolWindow.setToHideOnEmptyContent(true);
+        }
+
+        ContentManager contentManager = toolWindow.getContentManager();
+        ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
+        WebView webView = new WebView(url);
+        Content content = contentFactory.createContent(webView.getContent(),
+                "Dependency Analytics Report", false);
+        content.setCloseable(true);
+        contentManager.removeAllContents(true);
+        contentManager.addContent(content);
+        contentManager.setSelectedContent(content, true);
+        toolWindow.show();
     }
 }
