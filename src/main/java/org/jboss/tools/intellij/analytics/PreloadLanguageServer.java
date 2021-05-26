@@ -34,11 +34,15 @@ public final class PreloadLanguageServer extends PreloadingActivity {
     log.debug("lsp preload called");
     try {
       final String devUrl = System.getenv("ANALYTICS_LSP_FILE_PATH");
-      File lspBundle;
+      final File lspBundle;
       if (devUrl != null) {
         lspBundle = new File(devUrl);
       } else {
-        final GitHubReleaseDownloader bundle = new GitHubReleaseDownloader(Platform.current.lspBundleName, cookies);
+        final GitHubReleaseDownloader bundle = new GitHubReleaseDownloader(
+                Platform.current.lspBundleName,
+                cookies,
+                "fabric8-analytics/fabric8-analytics-lsp-server",
+                false);
         lspBundle = bundle.download(indicator);
       }
       attachLanguageClient(lspBundle);

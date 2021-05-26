@@ -1,6 +1,5 @@
-
 plugins {
-    id "org.jetbrains.intellij" version "0.4.21"
+    id "org.jetbrains.intellij" version "0.7.2"
 }
 
 repositories {
@@ -37,6 +36,8 @@ buildSearchableOptions.enabled = false
 dependencies {
     implementation 'com.github.ballerina-platform:lsp4intellij:master-SNAPSHOT'
     implementation 'org.kohsuke:github-api:1.119'
+    implementation 'org.apache.commons:commons-compress:1.20'
+    implementation 'org.json:json:20201115'
     testImplementation("junit:junit:4.12")
 }
 
