@@ -6,7 +6,7 @@ public class Cli {
   public String cliBinaryName;
   public String cliReleaseTag;
 
-  // Set name of tarball, cli binary  and release tag
+  // Set name of CLI binary and release tag
   private static final Cli WINDOWS = new Cli("crda.exe", "v0.2.2");
   private static final Cli LINUX = new Cli("crda", "v0.2.2");
   private static final Cli MACOS = new Cli("crda", "v0.2.2");

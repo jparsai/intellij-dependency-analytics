@@ -18,12 +18,11 @@ public class GitHubReleaseDownloader {
   private final boolean forCli;
   private ICookie.Name cookieName; // Set name according to LSP/CLI calls
 
-  // constructor initialized for LSP download
   public GitHubReleaseDownloader(final String fileName, final ICookie cookies, final String repoName, final boolean forCli) throws IOException {
     this.fileName = fileName;
     this.cookies = cookies;
     this.release = new GitHubRelease(repoName);
-    this.forCli=forCli; // False for LSP download
+    this.forCli=forCli; // False for LSP download, True for CLI
   }
 
   private boolean isNewRelease(final String releaseLabel) {
@@ -45,7 +44,7 @@ public class GitHubReleaseDownloader {
     String telemetryProperty;
 
     if (forCli){
-      // CLI Release version is pinned to a stable version
+      // CLI Release version is pinned to a latest stable version
       // to avoid issues due to ongoing development of CLI
       latestReleaseTag = Cli.current.cliReleaseTag;
 

@@ -101,12 +101,13 @@
                 id="org.jboss.tools.intellij.analytics.PostStartupActivity"/>
     <preloadingActivity implementation="org.jboss.tools.intellij.analytics.PreloadCli"
                         id="org.jboss.tools.intellij.analytics.PostStartupCliActivity"/>
+    <fileEditorProvider implementation="org.jboss.tools.intellij.analytics.SaReportEditorProvider"/>
   </extensions>
 
   <!-- Action for running SA added in Editor window and Navigation Bar -->
   <actions>
     <group>
-      <action id="saAnalysis" text="Dependency Analytics Report" class="org.jboss.tools.intellij.analytics.StackAnalysisAction"
+      <action id="saAnalysis" text="Dependency Analytics Report" class="org.jboss.tools.intellij.analytics.SaReportAction"
               icon="SdkIcons.Sdk_default_icon"/>
 
       <separator/>

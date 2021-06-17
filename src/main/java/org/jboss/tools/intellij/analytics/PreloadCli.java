@@ -5,42 +5,52 @@ import com.intellij.openapi.application.PreloadingActivity;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.progress.ProgressIndicator;
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
 
 
 public final class PreloadCli extends PreloadingActivity {
   private static final Logger log = Logger.getInstance(PreloadCli.class);
   private final ICookie cookies = ServiceManager.getService(Settings.class);
 
-
+  /**
+   * <p> Activity need to be performed when plugin/IDE is started.</p>
+   *
+   * When IDE is started or plugin is installed setup prerequisites for plugin.
+   *
+   * @param indicator An object of ProgressIndicator
+   */
   @Override
-  public void preload(ProgressIndicator indicator) {
+  public void preload(@NotNull ProgressIndicator indicator) {
     if (ApplicationManager.getApplication().isUnitTestMode()) {
       return;
     }
     log.warn("cli preload is called");
 
     try {
+      // If Env variable is set then use binary file from value given
       final String cliPath = System.getenv("CLI_FILE_PATH");
 
-      //CLI Binary file will be used to run system process.
+      // If Env variable is not set download binary from GitHub Repo
       if (cliPath == null) {
-        final CliReleaseDownloader bundle = new CliReleaseDownloader(
+        final GitHubReleaseDownloader bundle = new GitHubReleaseDownloader(
                 Platform.current.cliTarBallName,
                 cookies,
                 "fabric8-analytics/cli-tools",
                 true);
+
         // Download the tarball
         bundle.download(indicator);
 
-        // Untar file to get CLI Binary
-        bundle.unTarBundle(Platform.current.cliTarBallName, Cli.current.cliBinaryName);
+        // Extract tar file to get CLI Binary
+        new SaUtils().unTarBundle(Platform.current.cliTarBallName, Cli.current.cliBinaryName);
       }
 
-      // Check if crda config file is present in system
-      // if not then generate one and set User Key
-      new CliProcessExecutor().authenticateUser();
-    } catch(Exception ex) {
-      log.error("cli preload failed ", ex);
+      // Authenticate user
+      new SaProcessExecutor().authenticateUser();
+    } catch(IOException | InterruptedException e) {
+      log.error("Could not download CLI binaries ", e);
     }
   }
 }

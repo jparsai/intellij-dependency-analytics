@@ -5,11 +5,11 @@ import com.intellij.openapi.extensions.PluginId;
 import com.intellij.openapi.util.SystemInfo;
 
 public class Platform {
-  //Set Plugin location in host machine. Location will be used ad download location.
+  //Set Plugin location in host machine. Location will be used as download location.
   public static final String pluginDirectory = PluginManagerCore.getPlugin(
-          PluginId.getId("org.jboss.tools.intellij.analytics"))
-          .getPluginPath().toAbsolutePath().toString();
+          PluginId.getId("org.jboss.tools.intellij.analytics")).getPluginPath().toAbsolutePath().toString();
 
+  // Set LSP and CLI tarballs to be downloaded, CLI version is pinned to last stable version instead of latest.
   private static final Platform WINDOWS = new Platform("analytics-lsp-win.exe", "crda_0.2.2_Windows_64bit.tar.gz");
   private static final Platform LINUX = new Platform("analytics-lsp-linux", "crda_0.2.2_Linux_64bit.tar.gz");
   private static final Platform MACOS = new Platform("analytics-lsp-macos", "crda_0.2.2_macOS_64bit.tar.gz");
